@@ -23,7 +23,7 @@ Script is divided into so called labels, which are basically code sections.
 ```
 
 They are defined with a name on the top and a code between. These sections are called via Modifier.
-> Labels can be called with a syntax `+++SomeLabel+++`, though this practice shouldn't be used in modification script environment.
+> ?? Labels can be called with a syntax `+++SomeLabel+++`, though this practice shouldn't be used in modification script environment.
 
 Modifier currently recognizes these labels:
 - Metadata
@@ -58,7 +58,7 @@ Then we have **Solver**, section that is used only in Modifier Solver. If the sc
 
 API is basically an interface of many functions, structs and globals which provide extended functionality for scripting. **Challenge API** adds almost a hundred of functions defining not only base of Map Editor Plugin (see Modifier for futher information about MEP), dozens of structs and a few useful globals.
 
-> **VERY IMPORTANT**: Functions of Challenge API return **ONLY INFORMATIVE VALUES**. This is especially crucial with structs. Some functions return a struct which contains subinformation. Changing a value in subinformation is allowed with regular ManiaScript, but **doesn't have an effect** in the real map modification! That means whatever you change in the structs (that aren't defined in Globals), you won't see any actual map changes. **Map does only modify with function calls**.
+> !! **VERY IMPORTANT**: Functions of Challenge API return **ONLY INFORMATIVE VALUES**. This is especially crucial with structs. Some functions return a struct which contains subinformation. Changing a value in subinformation is allowed with regular ManiaScript, but **doesn't have an effect** in the real map modification! That means whatever you change in the structs (that aren't defined in Globals), you won't see any actual map changes. **Map does only modify with function calls**.
 
 To change parameters of the block, there's no other way than removing the block and placing it back with new parameters (unless you use one of the more advanced functions like `ReplaceBlock()`, but the functions still works on removing and placing back).
 
@@ -125,7 +125,7 @@ Void Problem_CannotRemoveCheckpoint(SChWaypoint _Checkpoint) {
 }
 ```
 
-> This is just a good practice which isn't required, but is heavily recommended.
+> ?? This is just a good practice which isn't required, but is heavily recommended.
 
 As a developer which writes this documentation, I want to find a way to have pre-written problem functions that can be easily extended by the community, but currently, you have to live with this method.
 
@@ -147,4 +147,4 @@ Defining progress also generates approximate remaining time of completion. You c
 ## Advanced, perhaps handy information
 
 Scripting environment runs under class context called `CMlScript`. This class contains some hidden unofficial members and funtions which might be handy for you to use.
-> The script actually runs under two different subcontexts: `CMapEditorPluginLayer` and `CManiaAppTitleLayer`. `CMapEditorPluginLayer` runs when the modification is happening, `CManiaAppTitleLayer` runs when you're browsing scripts in Browser. Because one context doesn't have members of the other context, you shouldn't use any of the specialized members or functions from them, as that would crash scripts in one or another environment.
+> ?? The script actually runs under two different subcontexts: `CMapEditorPluginLayer` and `CManiaAppTitleLayer`. `CMapEditorPluginLayer` runs when the modification is happening, `CManiaAppTitleLayer` runs when you're browsing scripts in Browser. Because one context doesn't have members of the other context, you shouldn't use any of the specialized members or functions from them, as that would crash scripts in one or another environment.

@@ -6,7 +6,7 @@ An API function takes approximately 40 miliseconds to fully complete, depending 
 
 What does this mean in practice? You shouldn't scroll through every block and set the status progress for each and every block, because setting a single status progress takes these 40 milliseconds. When you have a map with thousands of blocks, the script would become insanely slow!
 
-> Getting all blocks using `GetBlocks()` shouldn't be used in the first place because this can generate a huge array (thousands of entries usually) which commonly crash ManiaPlanet for yet unknown reasons. You should only get the blocks you really need. You can do so with `GetFilteredBlocks()` or waypoint functions.
+> !? Getting all blocks using `GetBlocks()` shouldn't be used in the first place because this can generate a huge array (thousands of entries usually) which commonly crash ManiaPlanet for yet unknown reasons. You should only get the blocks you really need. You can do so with `GetFilteredBlocks()` or waypoint functions.
 
 ## Item placement doesn't work with Challenge API
 
@@ -14,4 +14,4 @@ You can't place items automatically using the script. You can only remove anchor
 
 You have to create a problem and manual solution based on position checks.
 
-If you want the easiest way, create a problem without solutions once you get in contact with item.
+If you want the easiest way, create a problem without solutions once you get in contact with item. Be aware that this would fail creating challenge in almost every modern map.

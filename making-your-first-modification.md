@@ -63,7 +63,7 @@ foreach(Checkpoint in Checkpoints) {
 
 Now we can get each checkpoint block and spin it. This is doable with a handy function called `ReplaceBlock()` as it contains a special parameter `Boolean _OppositeDirection`.
 
-> DON'T change the subinformation of each checkpoint to a different direction! Even though it may sound way easier, nicer and cleaner, modifying subinformation of structs does not modify maps. Only function calls can do that. You can imagine the checkpoint as a printed paper. Changing stuff on the paper doesn't change the actual document you have on your drive.
+> !! DON'T change the subinformation of each checkpoint to a different direction! Even though it may sound way easier, nicer and cleaner, modifying subinformation of structs does not modify maps. Only function calls can do that. You can imagine the checkpoint as a printed paper. Changing stuff on the paper doesn't change the actual document you have on your drive.
 
 The function returns a little more advanced replacement result, known as `SReplacementResult`: containing if the block was removed and placed.
 
@@ -252,6 +252,106 @@ foreach(Checkpoint in Checkpoints) {
 ```
 
 ### "Block not properly replaced" problem
+
+Blocks can sometimes be of a ghost (and relatively often on custom maps!). Challenge API can't work with ghost blocks, but can efficiently detect them. Let's first add the new check. We do that around `Replacement` variable. It's good to check both removed and placed at once to save some lines of code.
+
+```php
+SetStatusStage("{{{{MODIFYING}}}}...");
+declare Counter = 0.;
+foreach(Checkpoint in Checkpoints) {
+	if(Checkpoint.IsBlock) {
+		SetStatusMessage("Rotating block " ^ Checkpoint.Block.Name ^ " by 180°...");
+		declare Replacement = ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name, True);
+		if(!Replacement.Removed || !Replacement.Placed) {
+			Problem_CannotReplaceBlock(Replacement.Block);
+		}
+	}
+	else if(Checkpoint.IsItem) {
+		Problem_ItemCheckpoint(Checkpoint.Item);
+	}
+	else {
+		Problem();
+	}
+
+	Counter += 1;
+	SetStatusProgress(Counter/Checkpoints.count);
+}
+***
+```
+
+Guess what, we forgot to add the function.
+
+```php
+	Problem(P);
+}
+
+Void Problem_CannotReplaceBlock(SChBlock _Block) {
+	declare SChProblem P;
+	P.Name = "CANNOT_REPLACE_BLOCK";
+	P.Blocks.add(_Block);
+	P.ShortDescription = "Cannot replace " ^ _Block.Name;
+	P.LongDescription = "This block cannot be replaced. The block to replace is probably ghost block.";
+	Problem(P);
+}
+```
+
+That should be enough of possible problems the script can have. If one of these problems will happen on a certain map, the challenge will become invalid (therefore unplayable and not possible to save).
+
+These problems have potential solutions though! The solving is a bit more advanced topic which I cover in Problem solving tutorial.
+
+## The full code!
+
+```php
+***Metadata***
+***
+Script.Name = "Czechspin iksde";
+Script.AuthorLogin = "bigbang1112"; // put your Maniaplanet login there
+Script.Description = "Rotates all checkpoints by 180°.";
+Script.CompatibleCollections = "Canyon,Stadium,Valley,Lagoon";
+***
+
+***Main***
+***
+SetStatusStage("{{{{MODIFYING}}}}...");
+declare Counter = 0.;
+foreach(Checkpoint in Checkpoints) {
+	if(Checkpoint.IsBlock) {
+		SetStatusMessage("Rotating block " ^ Checkpoint.Block.Name ^ " by 180°...");
+		declare Replacement = ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name, True);
+		if(!Replacement.Removed || !Replacement.Placed) {
+			Problem_CannotReplaceBlock(Replacement.Block);
+		}
+	}
+	else if(Checkpoint.IsItem) {
+		Problem_ItemCheckpoint(Checkpoint.Item);
+	}
+	else {
+		Problem();
+	}
+
+	Counter += 1;
+	SetStatusProgress(Counter/Checkpoints.count);
+}
+***
+
+Void Problem_ItemCheckpoint(SChItem _Checkpoint) {
+	declare SChProblem P;
+	P.Name = "ITEM_CHECKPOINT";
+	P.Items.add(_Checkpoint);
+	P.ShortDescription = "Checkpoint is an item.";
+	P.LongDescription = "This checkpoint is an item and can't be rotated.";
+	Problem(P);
+}
+
+Void Problem_CannotReplaceBlock(SChBlock _Block) {
+	declare SChProblem P;
+	P.Name = "CANNOT_REPLACE_BLOCK";
+	P.Blocks.add(_Block);
+	P.ShortDescription = "Cannot replace " ^ _Block.Name;
+	P.LongDescription = "This block cannot be replaced. The block to replace is probably ghost block.";
+	Problem(P);
+}
+```
 
 ## Why is this script problematic
 
