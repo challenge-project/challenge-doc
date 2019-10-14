@@ -7,7 +7,7 @@ Direction in Challenge API is a `Text` containing one of the cardinal directions
 - West
 - East
 
-If you define any direction parameter as empty `Text`, the used direction is always north.
+If you define any direction parameter as any other `Text`, the used direction will be always north.
 
 You can modify the direction simply via these available functions:
 
