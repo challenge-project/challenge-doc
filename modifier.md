@@ -2,6 +2,8 @@
 
 Modifier is a major Challenge tool that can process Modifier scripts (also called modification scripts or just modifications, challenge script is an incorrect term).
 
+![Modifier](assets/images/modifier-1.jpg "Modifier")
+
 Modifier can run in **Interface mode** or **Fast mode**:
 - Interface mode can be seen in the Challenge Sandbox title pack when applying a script. You can see the interface as the modification flow is step-by-step.
 - Fast mode can be seen in the Challenge Maker when running modifying in bulk. The interface is not visible and the modification flow is super fast (fastest it can be).
@@ -17,25 +19,25 @@ Metadata displays information extracted from the currently-applying modification
 - Script author login
 - Script description
 
-(image soon)
+![Metadata](assets/images/modifier-2.jpg "Metadata")
 
 ### Script
 
 Script currently just has a name of the currently-applying script and approximate time remaining to finish the script. The time approximation is still not elegant but it does a job.
 
-(image soon)
+![Script](assets/images/modifier-3.jpg "Script")
 
 ### Status
 
-Status displays the modification state, progress and current modification description
+Status displays the modification state, progress and current modification description.
 
-(image soon)
+![Status](assets/images/modifier-4.jpg "Status")
 
 ### Map
 
 At the top right, there's a map name and its challenge to be made, or that is already made. This UI module is shown in both Modification and Result.
 
-(image soon)
+![Map](assets/images/modifier-5.jpg "Map")
 
 ## Result
 
@@ -47,13 +49,13 @@ There are two different types of Result:
 
 Successful is shown if the script has been executed successfully or with solvable problems. Failed is shown if the script has come to an unsolvable problem.
 
-(image soon)
+![Result](assets/images/modifier-6.jpg "Result")
 
 ## Solver
 
 Solver is a stage of Modifier (separate from Result) which solves problems by providing a user interface. On the right, there is a list of all problems with the challenge. On the left, there is a list of possible solutions for each problem.
 
-(image soon)
+![Solver](assets/images/modifier-7.jpg "Solver")
 
 Clicking on the solution will process a code that the modification script has. The solution flow is fully customizable by the script and not defined beforehand. When the executed script ends, the user is returned back to the standard Solver interface. If the executed script ends with variable `Solver_Success = True`, the problem from the right window will disappear.
 
