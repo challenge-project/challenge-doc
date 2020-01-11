@@ -59,7 +59,7 @@ Clicking on the solution will process a code that the modification script has. T
 
 ## Processor
 
-Processor is (link to github)a library that contains all of the actions (commands) Modifier can do in Modification or Solver state and many block technologies to ensure modification safety.
+Processor is [a library](https://github.com/challenge-project/challenge-sandbox/blob/master/Scripts/Libs/Challenge/Processor.Script.txt) that contains all of the actions (commands) Modifier can do in Modification or Solver state and many block technologies to ensure modification safety.
 
 > ?? Modification safety basically means that the modification was executed **how the code expects**. If the script executed `RemoveBlock()` and the block wasn't removed physically even though the function returned success, then the function is not safe.
 
