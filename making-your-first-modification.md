@@ -19,7 +19,7 @@ Script.CompatibleCollections = "Canyon,Stadium,Valley,Lagoon";
 
 Let's write the stuff in the Main.
 
-As we focus only on checkpoints, we should only extract checkpoint information from the map. But first, we have to know what kinds of checkpoints can exist. Yes, items! Currently it's not possible to place items with Challenge API (even the actual ManiaScript API doesn't support it). And so we can't make item checkpoints to rotate automatically. We'll define this as a problem later in the tutorial. We'll extract both blocks and items for now.
+As we focus only on checkpoints, we should only extract checkpoint information from the map. But first, we have to know what kinds of checkpoints can exist. Yes, items! Currently, it's not possible to place items with Challenge API (even the actual ManiaScript API doesn't support it). And so we can't make item checkpoints to rotate automatically. We'll define this as a problem later in the tutorial. We'll extract both blocks and items for now.
 
 ```php
 ***Main***
@@ -28,7 +28,7 @@ declare Checkpoints = GetCheckpoints();
 ***
 ```
 
-We get an array of checkpoints which we can now use to scroll through and rotate. To do so, we use `foreach`.
+We get an array of checkpoints that we can now use to scroll through and rotate. To do so, we use `foreach`.
 
 ```php
 ***Main***
@@ -40,7 +40,7 @@ foreach(Checkpoint in Checkpoints) {
 ***
 ```
 
-Thing to remember: the type of `Checkpoint` is `SChCheckpoint`, which defines:
+The thing to remember: the type of `Checkpoint` is `SChCheckpoint`, which defines:
 
 - `IsBlock`
 - `Block`
@@ -79,9 +79,9 @@ foreach(Checkpoint in Checkpoints) {
 ***
 ```
 
-Ok so what is going on here...
+Ok, so what is going on here...
 
-`ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name)` is a technique which removes and places the exact same block. This function alone is pretty useless. But the opposite direction parameter can make it actually useful.
+`ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name)` is a technique that removes and places the exact same block. This function alone is pretty useless. But the opposite direction parameter can make it actually useful.
 
 The script as of now would work and is usable in many cases. You can test it now using the Test button.
 
@@ -95,7 +95,7 @@ The only thing you can change about the user interface when modification happens
 
 We have to decide and code in how our percentage is going to progress until 100%. It always depends on specific scripts, but in our case, we just want to divide all of the checkpoints into each progress section, so it goes as smoothly as it can go.
 
-We need to have some kind of counter of each checkpoint progressively. There are two ways for this. Using `for` loop instead of `foreach`, which counts as you loop through, or have another variable before `foreach` and add `+1` on each loop. First way can become a mess with more complex scripts so we are going to stick with the second way.
+We need to have some kind of counter of each checkpoint progressively. There are two ways for this. Using `for` loop instead of `foreach`, which counts as you loop through, or have another variable before `foreach` and add `+1` on each loop. The first way can become a mess with more complex scripts so we are going to stick with the second way.
 
 ```php
 ***Main***
@@ -114,9 +114,9 @@ foreach(Checkpoint in Checkpoints) {
 ***
 ```
 
-Simple enough right. Well this won't work for one reason which you shouldn't forget next time.
+Simple enough right. Well, this won't work for one reason which you shouldn't forget next time.
 
-`Counter` and `Checkpoints.count` are of a type `Integer`. Operations with integers will return integer as well. As we are working with range 0-1, doing a division can only return 0 or 1. We need a decimal point number for the progress. To solve this problem, you have to convert either `Counter` or `Checkpoints.count` to `Real`.
+`Counter` and `Checkpoints.count` are of a type `Integer`. Operations with integers will return an integer as well. As we are working with range 0-1, dividing can only return 0 or 1. We need a decimal point number for the progress. To solve this problem, you have to convert either `Counter` or `Checkpoints.count` to `Real`.
 
 Real is defined by a number and **one decimal point**, so the fix is rather easy. Change
 
@@ -181,13 +181,13 @@ foreach(Checkpoint in Checkpoints) {
 ***
 ```
 
-When modification ends, the message is set automatically to how the script has executed.
+When modification ends, the message is set automatically to how the script has been executed.
 
 ## Now about handling problems
 
-You can see that on some maps you try, the results arent so accurate. They even may not ever be accurate, but the script shouldn't ever end up as successful. In this first tutorial, we won't be creating solutions for them.
+You can see that on some maps you try, the results aren't so accurate. They even may not ever be accurate, but the script shouldn't ever end up as successful. In this first tutorial, we won't be creating solutions for them.
 
-### "If checkpoint is item" problem
+### "If the checkpoint is item" problem
 
 Let's define the problem standardly below the Main section:
 
@@ -206,7 +206,7 @@ Void Problem_ItemCheckpoint(SChItem _Checkpoint) {
 }
 ```
 
-Once this function is called, fatal problem happens as there is no solution defined. Fatal problems end the script instantly and the map can't be saved nor played.
+Once this function is called, a fatal problem happens as there is no solution defined. Fatal problems end the script instantly and the map can't be saved nor played.
 
 So we check if a checkpoint is an item, then call the problem out. Very simple as of now:
 
@@ -228,7 +228,7 @@ foreach(Checkpoint in Checkpoints) {
 ***
 ```
 
-Even though this normally shouldn't happen, if the found checkpoint is not block or even item, we should have a statement for this case as well. We'll just add an "unknown" problem defined by the Challenge API already.
+Even though this normally shouldn't happen, if the found checkpoint is not a block or even item, we should have a statement for this case as well. We'll just add an "unknown" problem defined by the Challenge API already.
 
 ```php
 SetStatusStage("{{{{MODIFYING}}}}...");
@@ -295,7 +295,7 @@ Void Problem_CannotReplaceBlock(SChBlock _Block) {
 }
 ```
 
-That should be enough of possible problems the script can have. If one of these problems will happen on a certain map, the challenge will become invalid (therefore unplayable and not possible to save).
+That should be enough of the possible problems the script can have. If one of these problems will happen on a certain map, the challenge will become invalid (therefore unplayable and not possible to save).
 
 These problems have potential solutions though! The solving is a bit more advanced topic which I cover in Problem solving tutorial.
 
@@ -357,11 +357,11 @@ Void Problem_CannotReplaceBlock(SChBlock _Block) {
 
 Challenge scripts may not sometimes be as easy as we expect. I didn't expect the outcome of this script even myself.
 
-When you rotate blocks which have very fixed angle to be placeable, like tilted checkpoints or 90° steep checkpoints, it just isn't rotated 180° the right way.
+When you rotate blocks which have a very fixed angle to be placeable, like tilted checkpoints or 90° steep checkpoints, it just isn't rotated 180° the right way.
 
 Currently, there's no other technology for this case other than making block relations. It's basically a huge array of each block with their relation block and additionally with relative position and direction.
 
-You can learn about block relations (here).
+You can learn about block relations [here](#/working-with-relations).
 
 I consider scripts that use relations for all possible environments as professional and high quality, as they would work on every Nadeo map out there and on maps without ghost blocks.
 

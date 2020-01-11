@@ -4,9 +4,9 @@
 
 Block relation is currently the most effective Modifier technology for defining block similarities and sharing information between blocks.
 
-If we take off the exception of its complexity, by using relations, we can create almost 100% accurate challenges compatible with every environment. Again though, if map contains ghost blocks, there's nothing that the script can do with this. Scripts using the relation system are considered as high tier. Reverse, Checkpointless, Comeback and NoCP currently use the relation system.
+If we take off the exception of its complexity, by using relations, we can create almost 100% accurate challenges compatible with every environment. Again though, if the map contains ghost blocks, there's nothing that the script can do with this. Scripts using the relation system are considered as high tier. Reverse, Checkpointless, Comeback, and NoCP currently use the relation system.
 
-For each block name, you can define one or more connection partners. To align the partners properly The partner can have small differences, so you can adjust its relative location so it works just as the first block. Each relation is defined in a set of relations for each environment. Each environment can have its own relation set. Each block relation from relation set has its specific blocks with adjusts, like the coordination offset or clockwise rotation offset.
+For each block name, you can define one or more connection partners. To align the partners properly The partner can have small differences, so you can adjust its relative location so it works just like the first block. Each relation is defined in a set of relations for each environment. Each environment can have its own relation set. Each block relation from the relation set has its specific blocks with adjusts, like the coordination offset or clockwise rotation offset.
 
 ## Relations in code
 
@@ -57,9 +57,9 @@ So, the relation variable type is `SChRelationBlock[][][Text]`. XD Now yes, this
 
 If you know JSON, you surely see here the pattern.
 
-This is a relation set between checkpoints and roads. First, the seperation between environments is happening. For each environment, you get `SChRelationBlock[][]`. This is, again, a set of relations of one environment. The relation is then defined by `SChRelationBlock[]`. Here, usually this contains only pair of blocks, but you can add even 3 blocks or more. Although, you shouldn't really have one element in a relation set.
+This is a relation set between checkpoints and roads. First, the separation between environments is happening. For each environment, you get `SChRelationBlock[][]`. This is, again, a set of relations of one environment. The relation is then defined by `SChRelationBlock[]`. Here, usually, this contains only a pair of blocks, but you can add even 3 blocks or more. Although, you shouldn't really have one element in a relation set.
 
-If you have relation beween a block, and **no block**, you shouldn't forget adding an empty element as the second one. As you can see in the example relation set, this is pretty much defined like this in JSON:
+If you have relation between a block and **no block**, you shouldn't forget adding an empty element as the second one. As you can see in the example relation set, this is pretty much defined like this in JSON:
 
 ```json
 [
@@ -89,7 +89,7 @@ If you need to have any general relations (like relation between start and finis
 
 Reading is actually the easiest part of using relations.
 
-But first, we have to extract the environment of the current track so that the modification is optimized. We do that by extracting the map info with `GetMapInfo()` or `GetOriginalMapInfo()`. First or second one don't really matter in this case.
+But first, we have to extract the environment of the current track so that the modification is optimized. We do that by extracting the map info with `GetMapInfo()` or `GetOriginalMapInfo()`. The first or second one doesn't really matter in this case.
 
 ```php
 ***Main***
@@ -98,7 +98,7 @@ declare MapInfo = GetMapInfo();
 ***
 ```
 
-You can get environment info from `MapInfo.Environment` To start reading the actual relation set, definitely the best way of doing this is with `foreach`:
+You can get environment info from `MapInfo.Environment` To start reading the actual relation set, definitely, the best way of doing this is with `foreach`:
 
 ```php
 ***Main***
@@ -127,9 +127,9 @@ foreach(Relation, GetRelation_StartFinish()[MapInfo.Environment]) {
 ***
 ```
 
-> !? Don't forget! If the relation contains various amount of blocks, you may end up with script crashes by calling `Relation[0]` or `Relation[1]` straight away when the block isnt there. In these cases (therefore you don't have to do it always), check the `Relation.count` value.
+> !? Don't forget! If the relation contains various amount of blocks, you may end up with script crashes by calling `Relation[0]` or `Relation[1]` straight away when the block isn't there. In these cases (therefore you don't have to do it always), check the `Relation.count` value.
 
-Another reminder, the relation block is **not** a normal block of type `SChBlock`, but `SChRelationBlock`! It's similar type to `SChApproxBlock` although instead of exact position and direction, the offsets of these are presented instead.
+Another reminder, the relation block is **not** a normal block of type `SChBlock`, but `SChRelationBlock`! It's a similar type to `SChApproxBlock` although instead of exact position and direction, the offsets of these are presented instead.
 
 So if we want to replace all starts with all finishes (just a theory example lol), we would do:
 
@@ -155,11 +155,11 @@ declare Coord = SomeBlock.Coord + StartBlock.Coord;
 PlaceBlock(SomeBlock.Name, Coord, Direction);
 ```
 
-I don't have an example of this one just yet. Learn more about directions (here).
+I don't have an example of this one just yet. Learn more about directions [here](#/direction-functions).
 
 ## Writing own relation sets
 
-There are more ways of doing this, first one is by doing is the "variable" way.
+There are more ways of doing this, the first one is by doing is the "variable" way.
 
 ```php
 declare SChRelationBlock[][][Text] RelationSet;
@@ -234,4 +234,4 @@ declare SChRelationBlock[][][Text] RelationSet;
 declare Success = RelationSet.fromjson("""{"Canyon":[[{"Name":"RoadRaceCheckpointMirror","Coord":[0,0,0]},{"Name":"RoadRaceStraight","Coord":[0,0,0],"Direction":1}],[{"Name":"RoadRaceCheckpoint"},{"Name":"RoadRaceStraight","Direction":3}]],"Stadium":[[{"Name": "StadiumRoadMainCheckpoint"},{"Name":"StadiumRoadMain"}],[{"Name":"StadiumGrassCheckpoint"},{}]]}""");
 ```
 
-You can always contant BigBang1112 on Discord if you need help with relations.
+You can always contact BigBang1112 on Discord if you need help with relations.
