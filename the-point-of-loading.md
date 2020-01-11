@@ -16,7 +16,7 @@ There are more reasons, but only two major:
 
 The thing is: The usual manialink has UI elements and code combined together. This can be seen in my Leaderboards manialink for example. This usually fails text formatting (but that's now fixed thanks to Reaby's ManiaScript VSC extension commit) and arguments against it can be pretty much applied like for JavaScript in HTML. I personally prefer the separation to also reduce Interface Designer lag.
 
-I made a library (from the (link)Universe Library Set) simply called Manialink.Script.txt to realize a new flow for coding manialinks. **It separates UI elements from code into two files. During loading, the separated files are merged and loaded into memory.** This causes a small lag which is clearly seen in the title packs. Each UI section is processed this way and the loading bar increments on each fully loaded UI section, with ~20 millisecond wait in between to have processing space to update the loading bar.
+I made a library (from the [Universe Library Set](https://github.com/BigBang1112/universe-library-set)) simply called Manialink.Script.txt to realize a new flow for coding manialinks. **It separates UI elements from code into two files. During loading, the separated files are merged and loaded into memory.** This causes a small lag which is clearly seen in the title packs. Each UI section is processed this way and the loading bar increments on each fully loaded UI section, with ~20 millisecond wait in between to have processing space to update the loading bar.
 
 Isn't that bad though? With UI elements and code merged in one file, you can test manialink interaction in the Interface Designer! Can do in the menu, but when coding UI for gameplay, you're screwed anyway.
 
