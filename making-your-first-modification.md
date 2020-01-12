@@ -312,6 +312,9 @@ Script.CompatibleCollections = "Canyon,Stadium,Valley,Lagoon";
 
 ***Main***
 ***
+SetStatusStage("{{{{ANALYZING}}}}...");
+declare Checkpoints = GetCheckpoints();
+
 SetStatusStage("{{{{MODIFYING}}}}...");
 declare Counter = 0.;
 foreach(Checkpoint in Checkpoints) {
@@ -319,7 +322,7 @@ foreach(Checkpoint in Checkpoints) {
 		SetStatusMessage("Rotating block " ^ Checkpoint.Block.Name ^ " by 180°...");
 		declare Replacement = ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name, True);
 		if(!Replacement.Removed || !Replacement.Placed) {
-			Problem_CannotReplaceBlock(Replacement.Block);
+			Problem_CannotReplaceBlock(Checkpoint.Block);
 		}
 	}
 	else if(Checkpoint.IsItem) {

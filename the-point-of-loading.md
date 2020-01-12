@@ -20,7 +20,7 @@ I made a library (from the [Universe Library Set](https://github.com/BigBang1112
 
 Isn't that bad though? With UI elements and code merged in one file, you can test manialink interaction in the Interface Designer! Can do in the menu, but when coding UI for gameplay, you're screwed anyway.
 
-Additionally, thanks to the construction, you can pass through some UI element and script modifications, like translation, or even themes which are currently not available in challenge. It gets way easier doing it in construction than in the Manialink script.
+Additionally, thanks to the construction, you can pass modifications through UI elements and the script, like translation, or even themes which are currently not available in Challenge. It gets way easier doing it in construction than in the Manialink script.
 
 > ?? The translation uses terms that have their format in the files, currently `{{{{TERM_NAME}}}}`. This entire string gets replaced with the associated `TERM_NAME` from language files depending on your Maniaplanet language setting.
 

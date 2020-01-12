@@ -17,8 +17,8 @@ Void Problem_ItemCheckpoint(SChItem _Checkpoint) {
 	P.LongDescription = "This checkpoint is an item and can't be rotated.";
 
 	P.Solutions.add(
-		Solution("Replace the item manually with the rotated one."); // here
-	)
+		Solution("Replace the item manually with the rotated one.", "", True) // here
+	);
 
 	Problem(P);
 }
@@ -31,8 +31,8 @@ Void Problem_CannotReplaceBlock(SChBlock _Block) {
 	P.LongDescription = "This block cannot be replaced. The block to replace is probably ghost block.";
 
 	P.Solutions.add(
-		Solution("Replace the block manually with the rotated one."); // here
-	)
+		Solution("Replace the block manually with the rotated one.", "", True) // here
+	);
 
 	Problem(P);
 }
@@ -172,3 +172,101 @@ Setting this variable to `True` will remove the problem from the problem list wh
 ## CANNOT_REPLACE_BLOCK solution
 
 More explanations coming soon.
+
+## The full code!
+
+```php
+***Metadata***
+***
+Script.Name = "Czechspin iksde";
+Script.AuthorLogin = "bigbang1112"; // put your Maniaplanet login there
+Script.Description = "Rotates all checkpoints by 180°.";
+Script.CompatibleCollections = "Canyon,Stadium,Valley,Lagoon";
+***
+
+***Main***
+***
+SetStatusStage("{{{{ANALYZING}}}}...");
+declare Checkpoints = GetCheckpoints();
+
+SetStatusStage("{{{{MODIFYING}}}}...");
+declare Counter = 0.;
+foreach(Checkpoint in Checkpoints) {
+	if(Checkpoint.IsBlock) {
+		SetStatusMessage("Rotating block " ^ Checkpoint.Block.Name ^ " by 180°...");
+		declare Replacement = ReplaceBlock(Checkpoint.Block, Checkpoint.Block.Name, True);
+		if(!Replacement.Removed || !Replacement.Placed) {
+			Problem_CannotReplaceBlock(Checkpoint.Block);
+		}
+	}
+	else if(Checkpoint.IsItem) {
+		Problem_ItemCheckpoint(Checkpoint.Item);
+	}
+	else {
+		Problem();
+	}
+
+	Counter += 1;
+	SetStatusProgress(Counter/Checkpoints.count);
+}
+***
+
+***Solver***
+***
+switch(Solver_Problem.Name) {
+	case "ITEM_CHECKPOINT": {
+		switch(Solver_Solution) {
+			case 0: {
+				ShowEditor();
+
+				declare Checkpoint = Solver_Problem.Items[0]; // we defined the checkpoint as the first item element
+				while(Exists(Checkpoint)) { // Removing stage
+					sleep(50);
+				}
+
+				while(!ExistsInRadius(Checkpoint, 16.)) { // 16 units tolerance in all direction
+					sleep(50);
+				}
+
+				Solver_Success = True;
+			}
+		}
+	}
+	case "CANNOT_REPLACE_BLOCK": {
+		switch(Solver_Solution) {
+			case 0: {
+				
+			}
+		}
+	}
+}
+***
+
+Void Problem_ItemCheckpoint(SChItem _Checkpoint) {
+	declare SChProblem P;
+	P.Name = "ITEM_CHECKPOINT";
+	P.Items.add(_Checkpoint);
+	P.ShortDescription = "Checkpoint is an item.";
+	P.LongDescription = "This checkpoint is an item and can't be rotated.";
+
+	P.Solutions.add(
+		Solution("Replace the item manually with the rotated one.", "", True) // here
+	);
+
+	Problem(P);
+}
+
+Void Problem_CannotReplaceBlock(SChBlock _Block) {
+	declare SChProblem P;
+	P.Name = "CANNOT_REPLACE_BLOCK";
+	P.Blocks.add(_Block);
+	P.ShortDescription = "Cannot replace " ^ _Block.Name;
+	P.LongDescription = "This block cannot be replaced. The block to replace is probably ghost block.";
+
+	P.Solutions.add(
+		Solution("Replace the block manually with the rotated one.", "", True) // here
+	);
+
+	Problem(P);
+}
+```

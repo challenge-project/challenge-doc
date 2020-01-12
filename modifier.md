@@ -69,6 +69,6 @@ Processor processes actions that are sent from the Modification script **through
 
 ### Conversion
 
-Conversion is a library for Processor to assist with conversion through different types, especially into official API reflections. It is the major helper for converting.
+Conversion is [a library](https://github.com/challenge-project/challenge-sandbox/blob/master/Scripts/Libs/Challenge/Conversion.Script.txt) for Processor to assist with conversion through different types, especially into official API reflections. It is the major helper for converting.
 
 > ?? Usage of struct replicas of official ManiaScript classes in the Challenge API might be controversial, but this had to be done due to the action arguments that have to be sent through JSON format. I have a potential idea that could use official classes (but honestly, sometimes their members are just not ideal for Challenge) and remove the struct subinformation change problem, which might become Challenge API 2 someday, though, rather unlikely. Most of the Challenge structs aren't exact replicas and add additional handy features. Structs are actually necessary.
